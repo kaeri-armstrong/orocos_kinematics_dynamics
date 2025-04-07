@@ -29,6 +29,7 @@
 #include <kdl/chain.hpp>
 #include <kdl/tree.hpp>
 #include <kdl/jntarrayvel.hpp>
+#include <kdl/joint_mimic.hpp>
 #include <kdl/chainiksolver.hpp>
 #include <kdl/chainfksolver.hpp>
 #include <kdl/chainfksolverpos_recursive.hpp>
@@ -40,6 +41,7 @@
 #include <kdl/chainiksolverpos_lma.hpp>
 #include <kdl/chainiksolvervel_pinv_nso.hpp>
 #include <kdl/chainiksolvervel_pinv_givens.hpp>
+#include <kdl/chainiksolver_vel_mimic_svd.hpp>
 #include <kdl/chainjnttojacsolver.hpp>
 #include <kdl/chainjnttojacdotsolver.hpp>
 #include <kdl/chainidsolver_recursive_newton_euler.hpp>
@@ -320,6 +322,15 @@ void init_kinfam(pybind11::module &m)
           py::arg("src1"), py::arg("src2"), py::arg("eps")=epsilon);
 
 
+    py::class_<JointMimic> joint_mimic(m, "JointMimic");
+    joint_mimic.def(py::init());
+    joint_mimic.def("reset", &JointMimic::reset, py::arg("index"));
+    joint_mimic.def_readwrite("offset", &JointMimic::offset);
+    joint_mimic.def_readwrite("multiplier", &JointMimic::multiplier);
+    joint_mimic.def_readwrite("map_index", &JointMimic::map_index);
+    joint_mimic.def_readwrite("joint_name", &JointMimic::joint_name);
+    joint_mimic.def_readwrite("active", &JointMimic::active);
+
     // --------------------
     // SolverI
     // --------------------
@@ -456,6 +467,15 @@ void init_kinfam(pybind11::module &m)
     chain_ik_solver_vel_pinv_nso.def("getOptPos", &ChainIkSolverVel_pinv_nso::getOptPos);
     chain_ik_solver_vel_pinv_nso.def("getAlpha", &ChainIkSolverVel_pinv_nso::getAlpha);
 
+
+    // ------------------------------
+    // ChainIkSolverVel_mimic_svd
+    // ------------------------------
+    py::class_<ChainIkSolverVelMimicSVD, ChainIkSolverVel> chain_ik_solver_vel_mimic_svd(m, "ChainIkSolverVel_mimic_svd");
+    chain_ik_solver_vel_mimic_svd.def(py::init<const Chain&, const std::vector<JointMimic>&, bool, double>(),
+                                        py::arg("chain"), py::arg("mimic_joints"), py::arg("position_ik")=false, py::arg("threshold")=0.001);
+    chain_ik_solver_vel_mimic_svd.def("setWeightJS", &ChainIkSolverVelMimicSVD::setWeightJS, py::arg("joint_weights"));
+    chain_ik_solver_vel_mimic_svd.def("setWeightTS", &ChainIkSolverVelMimicSVD::setWeightTS, py::arg("cartesian_weights"));
 
     // -------------------------------
     // ChainIkSolverVel_pinv_givens

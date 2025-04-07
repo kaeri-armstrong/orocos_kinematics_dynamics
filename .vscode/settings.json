@@ -1,0 +1,13 @@
+{
+    "files.associations": {
+        "*.html": "html",
+        "svd": "cpp",
+        "core": "cpp",
+        "complex": "cpp",
+        "iomanip": "cpp",
+        "array": "cpp",
+        "stdvector": "cpp",
+        "iostream": "cpp",
+        "specialfunctions": "cpp"
+    }
+}
