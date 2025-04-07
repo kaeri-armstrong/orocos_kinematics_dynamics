@@ -107,8 +107,6 @@ private:
 
   Eigen::JacobiSVD<Eigen::MatrixXd> svd_;
   Eigen::VectorXd qdot_out_reduced_;
-  Eigen::MatrixXd tmp_ts;
-  Eigen::MatrixXd tmp_js;
   Eigen::MatrixXd weight_ts;
   Eigen::VectorXd weight_js;
 

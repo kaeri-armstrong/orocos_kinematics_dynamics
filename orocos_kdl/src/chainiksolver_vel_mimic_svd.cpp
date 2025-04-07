@@ -53,6 +53,8 @@ ChainIkSolverVelMimicSVD::ChainIkSolverVelMimicSVD(const Chain& chain,
   , svd_(position_ik ? 3 : 6, chain_.getNrOfJoints() - num_mimic_joints_, Eigen::ComputeThinU | Eigen::ComputeThinV)
   , jac_(chain_.getNrOfJoints())
   , jac_reduced_(svd_.cols())
+  , weight_js(Eigen::VectorXd::Constant(svd_.cols(), 1.0))
+  , weight_ts(Eigen::Matrix<double, 6, 1>::Constant(1.0))
 {
   assert(mimic_joints_.size() == chain.getNrOfJoints());
 #ifndef NDEBUG

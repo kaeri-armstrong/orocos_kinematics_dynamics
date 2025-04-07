@@ -474,8 +474,8 @@ void init_kinfam(pybind11::module &m)
     py::class_<ChainIkSolverVelMimicSVD, ChainIkSolverVel> chain_ik_solver_vel_mimic_svd(m, "ChainIkSolverVel_mimic_svd");
     chain_ik_solver_vel_mimic_svd.def(py::init<const Chain&, const std::vector<JointMimic>&, bool, double>(),
                                         py::arg("chain"), py::arg("mimic_joints"), py::arg("position_ik")=false, py::arg("threshold")=0.001);
-    chain_ik_solver_vel_mimic_svd.def("setWeightJS", &ChainIkSolverVelMimicSVD::setWeightJS, py::arg("joint_weights"));
-    chain_ik_solver_vel_mimic_svd.def("setWeightTS", &ChainIkSolverVelMimicSVD::setWeightTS, py::arg("cartesian_weights"));
+    chain_ik_solver_vel_mimic_svd.def("setJointWeights", &ChainIkSolverVelMimicSVD::setWeightJS, py::arg("joint_weights"));
+    chain_ik_solver_vel_mimic_svd.def("setCartesianWeights", &ChainIkSolverVelMimicSVD::setWeightTS, py::arg("cartesian_weights"));
 
     // -------------------------------
     // ChainIkSolverVel_pinv_givens
