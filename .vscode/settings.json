@@ -8,6 +8,13 @@
         "array": "cpp",
         "stdvector": "cpp",
         "iostream": "cpp",
-        "specialfunctions": "cpp"
+        "specialfunctions": "cpp",
+        "bitset": "cpp",
+        "string_view": "cpp",
+        "initializer_list": "cpp",
+        "ranges": "cpp",
+        "regex": "cpp",
+        "utility": "cpp",
+        "valarray": "cpp"
     }
 }
